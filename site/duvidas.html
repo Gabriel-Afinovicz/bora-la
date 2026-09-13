@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dúvidas e erros comuns — UTF-SDD</title>
+<meta name="description" content="Os erros que mais aparecem, o Portão de Entendimento, o checklist antes do Pull Request e as perguntas frequentes do método UTF-SDD.">
+<link rel="icon" href="assets/portao.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;700&amp;family=JetBrains+Mono:wght@400;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&amp;display=swap">
+<link rel="stylesheet" href="assets/estilo.css">
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-interno">
+    <a class="selo" href="index.html">
+      <svg class="marca" viewBox="0 0 32 24" aria-hidden="true"><path d="M6 3v18M26 3v18M6 9h20M6 15h20"/></svg>
+      UTF-SDD
+    </a>
+    <nav aria-label="Seções do site">
+      <a href="index.html">Início</a>
+      <a href="ciclo.html">O ciclo</a>
+      <a href="comandos.html">Comandos</a>
+      <a href="papeis.html">Papéis</a>
+      <a href="duvidas.html" aria-current="page">Dúvidas</a>
+    </nav>
+  </div>
+</header>
+
+<main class="pagina">
+
+  <h1>Dúvidas e erros comuns</h1>
+
+  <p class="abertura">Quase todo problema no ciclo cai em uma destas linhas. Vale ler antes de
+  travar, e reler quando travar.</p>
+
+  <h2>Os erros que mais aparecem</h2>
+
+  <div class="rolagem largo">
+  <table>
+    <thead>
+      <tr><th scope="col">Erro</th><th scope="col">Por que dói</th><th scope="col">O que fazer</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Aprovar a spec sem ler</td><td>O sistema constrói, com perfeição, uma ideia errada</td><td>Leia inteira. Discorde de alguma coisa: sempre tem o que ajustar.</td></tr>
+      <tr><td>Deixar o agente trocar o <code>status</code> da spec</td><td>A aprovação deixa de ser sua e o <code>git log</code> deixa de provar qualquer coisa</td><td>Só você troca esse campo, e num commit seu.</td></tr>
+      <tr><td>Commitar a spec junto com o código, no fim</td><td>O histórico não prova que a especificação veio antes</td><td>Spec e plano são os primeiros commits da branch.</td></tr>
+      <tr><td>Histórias grandes demais</td><td>O agente se perde, estoura as rodadas e consome muito token</td><td>Se o plano tem mais de dez tarefas, quebre a história em duas e reescreva a spec.</td></tr>
+      <tr><td>Critérios de aceite vagos</td><td>Nada é verificável, e o revisor inventa critério a cada rodada</td><td>Escreva pensando no teste que provaria aquilo.</td></tr>
+      <tr><td>Deixar o caso de abandono só na prosa</td><td>Não vira teste, e volta no dia da apresentação</td><td>Todo caso de abandono também é critério de aceite.</td></tr>
+      <tr><td>Deixar rodar e olhar só no fim</td><td>Vira uma pilha de código estranho para julgar em cinco minutos</td><td>Acompanhe. Chame o tutor a cada tarefa. Interrompa quando algo parecer errado.</td></tr>
+      <tr><td>Deixar o mesmo agente corrigir o que ele escreveu</td><td>Ele herda o próprio ponto cego e defende a abordagem que propôs</td><td>Implementador novo a cada rodada, com os apontamentos transcritos.</td></tr>
+      <tr><td>Insistir na mesma conversa depois de várias tentativas falhas</td><td>A janela de contexto está contaminada: o agente repete e defende a abordagem errada</td><td>Descarte o working tree e a conversa. Comece de novo com a spec corrigida.</td></tr>
+      <tr><td>Aceitar todos os apontamentos do revisor</td><td>Revela que você não leu</td><td>Recusar com justificativa vale mais do que aceitar tudo.</td></tr>
+      <tr><td>Inchar a spec com o que apareceu no caminho</td><td>O plano aprovado é abandonado e o auditor compara o diff com uma spec que não descreve mais o trabalho</td><td>Pare e divida: Issue nova para o que foi descoberto.</td></tr>
+      <tr><td>Documentar depois</td><td>Nunca acontece</td><td>O auditor final confere antes do PR.</td></tr>
+      <tr><td>Protótipo desatualizado</td><td>Documentação que mente é pior que documentação ausente</td><td>O link do protótipo vive no <code>design-tokens.md</code> e acompanha a mudança.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2>O Portão de Entendimento</h2>
+
+  <p>Todo Pull Request precisa ter, no corpo, a seção <strong>“O que este PR faz e por
+  quê”</strong> preenchida com pelo menos <strong>250 caracteres</strong>. Uma verificação
+  automática confere isso e reprova o PR se faltar. É uma regra só, e vale para todos os PRs,
+  inclusive os de manutenção.</p>
+
+  <p>Se a mudança é pequena, a explicação é curta e específica. Algo como <em>“o formulário
+  de reserva não desabilitava o botão durante o envio, e clique duplo criava duas reservas;
+  passei o botão a depender de um signal <code>enviando</code> e ajustei o teste que
+  dependia do comportamento antigo”</em> já passa dos 250 caracteres e diz alguma coisa.</p>
+
+  <div class="pare">
+    <p><strong>Não cole o diff nem a saída da IA nessa explicação.</strong> O texto precisa
+    ser seu. Na apresentação o professor pode sortear qualquer PR e pedir que você explique ao
+    vivo o que escreveu ali, e é fácil perceber quando o texto não é de quem está falando.</p>
+  </div>
+
+  <h2>Precisa de spec para qualquer mudança?</h2>
+
+  <p>Não. A regra é o impacto no produto.</p>
+
+  <div class="ok">
+    <p><strong>Precisa de spec</strong> toda mudança que cria um recurso novo, altera uma
+    regra de negócio ou conserta um bug de comportamento — por exemplo, “o passageiro não
+    consegue cancelar a reserva”. Essas nascem como Issue no GitHub Projects e o ciclo
+    completo é obrigatório.</p>
+  </div>
+
+  <div class="nota">
+    <p><strong>Não precisa de spec</strong> a mudança puramente técnica: subir a versão do
+    Angular, corrigir erro de digitação, extrair um componente repetido, ajustar regras de
+    formatação. Abra a Issue pelo modelo <em>Tarefa técnica</em>, e o PR com a etiqueta
+    <code>manutencao</code>.</p>
+    <p>A etiqueta decide só isso. <strong>Ela não dispensa a explicação</strong> — todo PR
+    explica o que faz e por quê.</p>
+  </div>
+
+  <h2>Checklist antes de abrir o Pull Request</h2>
+
+  <ul class="conferir">
+    <li>Existe uma Issue e o PR referencia ela, com <code>Closes #27</code>.</li>
+    <li>O PR vai para a <code>develop</code>, e a branch nasceu dela.</li>
+    <li>O <code>spec.md</code> está com <code>status: aprovada</code>, e o commit que trocou esse campo é <strong>seu</strong>.</li>
+    <li>Spec e plano são os primeiros commits da branch, antes de qualquer código.</li>
+    <li>Os testes cobrem os critérios de aceite <strong>e os casos de abandono</strong>, e passam.</li>
+    <li>Os pareceres estão em <code>reviews/</code>, um por revisor por rodada.</li>
+    <li>A revisão foi feita por agentes diferentes do que implementou, e nenhum deles tinha permissão de escrita.</li>
+    <li>Os apontamentos aceitos e recusados estão registrados no PR, com motivo.</li>
+    <li>Todo <code>Assume que</code> da spec tem um <code>// TODO #&lt;issue&gt;</code> no código e uma Issue aberta.</li>
+    <li>O <code>architecture.md</code> reflete o comportamento atual.</li>
+    <li>O status da história no <code>prd.md</code> está correto.</li>
+    <li>A seção “O que este PR faz e por quê” está escrita, com as suas palavras.</li>
+    <li>Você consegue explicar cada trecho do diff sem consultar a IA.</li>
+  </ul>
+
+  <p>O último item é o único que ninguém verifica automaticamente, e é o que sustenta a maior
+  parte da sua nota individual.</p>
+
+  <h2>Perguntas frequentes</h2>
+
+  <dl class="perguntas">
+    <dt>Posso usar a IA para escrever a especificação?</dt>
+    <dd>Sim, e é o esperado. O que não pode é aprovar sem ler e sem discordar de nada.</dd>
+
+    <dt>E se eu discordar do agente revisor?</dt>
+    <dd>Ótimo. Recuse o apontamento e escreva o motivo no PR. Recusa fundamentada é sinal de
+    que você entendeu; aceitar tudo é sinal contrário.</dd>
+
+    <dt>O ciclo travou nas duas rodadas de revisão. O que faço?</dt>
+    <dd>Quase sempre significa que a spec está ambígua ou a história é grande demais. Leia os
+    dois pareceres da rodada 2 lado a lado: se eles discordam entre si, ou apontam o mesmo
+    trecho por motivos diferentes, o problema está na spec. Volte um passo em vez de insistir
+    na correção.</dd>
+
+    <dt>O implementador disse que a tarefa é maior do que o plano previa. E agora?</dt>
+    <dd>Ele está certo com mais frequência do que se imagina. Pare, volte ao
+    <code>plan.md</code> e quebre aquela tarefa em duas. Não mande ele fazer assim mesmo — é o
+    começo do estouro das rodadas.</dd>
+
+    <dt>Descobri um problema novo no meio da história. Aproveito e conserto?</dt>
+    <dd>Não. Não inche a spec: registre como comentário na Issue e abra uma Issue nova. O
+    escopo do PR é o escopo da spec, e é contra ela que o auditor final vai comparar o diff.</dd>
+
+    <dt>Por que este projeto não tem backend próprio?</dt>
+    <dd>Porque o foco da disciplina é o front. Os dados vêm de um <strong>BaaS</strong>, que
+    entrega autenticação, banco e API prontos — na E2 pelo <code>json-server</code>, na E3 pelo
+    BaaS de verdade. A pasta <code>apps/api</code> existe vazia só para guardar lugar, caso um
+    dia exista uma API própria.</dd>
+
+    <dt>Posso usar o tutor na apresentação?</dt>
+    <dd>Não. Ele existe justamente para você não precisar dele lá.</dd>
+
+    <dt>Trabalho em equipe. Como fica a nota?</dt>
+    <dd>As entregas são avaliadas por equipe. A defesa técnica é individual, e cada integrante
+    recebe a nota que a própria arguição sustentar.</dd>
+
+    <dt>Existem outros SDDs por aí?</dt>
+    <dd>Sim. As duas outras famílias mais conhecidas são o GitHub Spec Kit, que faz o mesmo por
+    comandos explícitos, e a família GSD. Você não precisa conhecê-las para cursar a
+    disciplina, e conhecer as três ao mesmo tempo atrapalha mais do que ajuda: são a mesma
+    ideia com vocabulários diferentes. Se experimentar o Spec Kit, não use o
+    <code>/implement</code> de forma massiva para todas as tarefas de uma vez — o método daqui
+    exige uma branch e um Pull Request por Issue.</dd>
+  </dl>
+
+  <div class="adiante">
+    <h2>Ainda com dúvida?</h2>
+    <p>O <a href="https://github.com/utfpr-gp/utf-angular-template/blob/main/docs/guia-sdd.md">guia da disciplina</a> tem a discussão inteira, com
+    os desvios do ciclo e os apêndices. E dentro do projeto, <code>/utf-tutor</code> responde
+    sobre o seu código.</p>
+  </div>
+
+</main>
+
+<footer class="rodape">
+  <div class="rodape-interno">
+    <p>UTF-SDD — método da disciplina de Angular, UTFPR.</p>
+    <p>Referência completa no repositório: <a href="https://github.com/utfpr-gp/utf-angular-template/blob/main/docs/guia-sdd.md">guia</a>, <a href="https://github.com/utfpr-gp/utf-angular-template/blob/main/docs/tutorial-sdd.md">tutorial</a>, <a href="https://github.com/utfpr-gp/utf-angular-template/blob/main/docs/checklist.md">checklist</a>.</p>
+    <p><a href="https://github.com/utfpr-gp/utf-angular-template">github.com/utfpr-gp/utf-angular-template</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>O ciclo — UTF-SDD</title>
+<meta name="description" content="A Fase 0, o ciclo de uma história e os quatro portões de decisão do método UTF-SDD.">
+<link rel="icon" href="assets/portao.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;700&amp;family=JetBrains+Mono:wght@400;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&amp;display=swap">
+<link rel="stylesheet" href="assets/estilo.css">
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-interno">
+    <a class="selo" href="index.html">
+      <svg class="marca" viewBox="0 0 32 24" aria-hidden="true"><path d="M6 3v18M26 3v18M6 9h20M6 15h20"/></svg>
+      UTF-SDD
+    </a>
+    <nav aria-label="Seções do site">
+      <a href="index.html">Início</a>
+      <a href="ciclo.html" aria-current="page">O ciclo</a>
+      <a href="comandos.html">Comandos</a>
+      <a href="papeis.html">Papéis</a>
+      <a href="duvidas.html">Dúvidas</a>
+    </nav>
+  </div>
+</header>
+
+<main class="pagina">
+
+  <h1>O ciclo, do começo ao Pull Request</h1>
+
+  <p class="abertura">O projeto tem dois momentos. A Fase 0 acontece uma vez e estabelece o
+  entendimento compartilhado. Depois dela, cada história de usuário roda o mesmo ciclo, do
+  mesmo jeito, até o fim do semestre.</p>
+
+  <h2>Fase 0: o entendimento compartilhado</h2>
+
+  <p>Antes de codificar a primeira Issue, você escreve o que o produto faz, como ele se
+  parece e onde as coisas moram. Não é burocracia de início de semestre. É que o ciclo por
+  Issue <strong>amplifica o contexto que existe</strong>: com um PRD e um documento de
+  arquitetura, cada especificação nasce coerente com o resto do sistema. Sem eles, cada Issue
+  vira um projeto novo — o agente inventa o nome da entidade, escolhe sozinho onde a regra
+  mora, decide um formato de resposta diferente. Na quinta Issue você tem três jeitos de
+  fazer a mesma coisa, e nenhum deles está errado isoladamente.</p>
+
+  <ol class="fluxo">
+    <li>
+      <span class="quem eh-ia">entrevista conduzida pela IA</span>
+      <h3>Requisitos</h3>
+      <p>O comando <code>/utf-prd</code> faz uma pergunta por vez e escreve
+      <code>docs/prd.md</code>: glossário, atores, histórias de usuário com critérios
+      verificáveis, regras de negócio e os pontos onde a pessoa desiste.</p>
+      <div class="decide">
+        <svg class="marca" viewBox="0 0 32 24" aria-hidden="true"><path d="M6 3v18M26 3v18M6 9h20M6 15h20"/></svg>
+        <p><b>Você lê o documento inteiro, ajusta e commita.</b> O tema vai ao professor.</p>
+      </div>
+    </li>
+    <li>
+      <span class="quem eh-ia">IA propõe, GitHub recebe</span>
+      <h3>Backlog</h3>
+      <p><code>/utf-backlog</code> transforma cada história marcada como <code>Ready</code> em
+      uma Issue e monta o Kanban no Projects. A descrição da Issue só aponta para o PRD —
+      regra de negócio nunca é copiada para lá, senão passam a existir duas versões dela.</p>
+      <div class="decide">
+        <svg class="marca" viewBox="0 0 32 24" aria-hidden="true"><path d="M6 3v18M26 3v18M6 9h20M6 15h20"/></svg>
+        <p><b>Você aprova a lista antes de as Issues serem criadas.</b></p>
+      </div>
+    </li>
+    <li>
+      <span class="quem eh-ia">entrevista conduzida pela IA</span>
+      <h3>Design e protótipo</h3>
+      <p><code>/utf-design</code> fecha o framework CSS, os tokens em
+      <code>docs/design-tokens.md</code>, o Mobile-First e a identidade PWA — e registra o
+      link do <strong>protótipo navegável</strong> (Figma, Stitch ou equivalente). Aqui a
+      jornada do usuário vive no protótipo; o que ela decide sobre abandono volta para o
+      PRD como critério.</p>
+      <div class="decide">
+        <svg class="marca" viewBox="0 0 32 24" aria-hidden="true"><path d="M6 3v18M26 3v18M6 9h20M6 15h20"/></svg>
+        <p><b>A equipe decide, revisa fora do chat e commita.</b> Decisão de design sem dono não existe: alguém vai explicá-la na apresentação.</p>
+      </div>
+    </li>
+    <li>
+      <span class="quem eh-ia">entrevista conduzida pela IA</span>
+      <h3>Arquitetura</h3>
+      <p><code>/utf-architecture</code> escreve <code>docs/architecture.md</code>: estrutura
+      de pastas, componentes e services, estados, rotas e o modelo de dados do BaaS. Ele vem
+      depois do design de propósito — o protótipo e os pontos de desistência revelam telas e
+      estados que este documento precisa mapear.</p>
+      <div class="decide">
+        <svg class="marca" viewBox="0 0 32 24" aria-hidden="true"><path d="M6 3v18M26 3v18M6 9h20M6 15h20"/></svg>
+        <p><b>Você lê e commita.</b></p>
+      </div>
+    </li>
+    <li>
+      <span class="quem eh-ia">IA gera</span>
+      <h3>Scaffold</h3>
+      <p><code>/utf-setup</code> lê a stack do <code>architecture.md</code> e gera o app pelo
+      gerador oficial, com a suíte de testes rodando e vazia de regras. Ele precisa vir antes
+      da primeira Issue por um motivo do próprio método: <strong>o RED do TDD só significa
+      alguma coisa num repositório onde os testes já rodam.</strong> Um teste que falha
+      porque o critério não foi implementado é informação; um que falha porque não existe
+      runner instalado é ruído.</p>
+      <div class="decide">
+        <svg class="marca" viewBox="0 0 32 24" aria-hidden="true"><path d="M6 3v18M26 3v18M6 9h20M6 15h20"/></svg>
+        <p><b>Você ratifica as decisões e abre o primeiro Pull Request</b> para a <code>develop</code>, com a etiqueta <code>manutencao</code>. Antes disso o tutor explica o scaffold inteiro, sem você precisar pedir.</p>
+      </div>
+    </li>
+  </ol>
+
+  <p>A Fase 0 é a Entrega 1. Depois dela a lógica se inverte: documentação deixa de ser etapa
+  e passa a andar junto de cada PR, atualizada no mesmo commit que muda o comportamento.
+  A Fase 0 é o único momento do semestre em que você descreve um sistema que ainda não
+  existe.</p>
+
+  <h2>O ciclo de uma história</h2>
+
+  <p>A partir daqui, tudo se repete. Uma Issue, uma branch, um Pull Request. Como este projeto
+  usa <strong>Gitflow</strong>, a branch nasce da <code>develop</code> e volta para ela — a
+  <code>main</code> guarda só o que está em produção.</p>
+
+  <ol class="fluxo">
+    <li>
+      <span class="quem eh-ia">IA pergunta, você responde</span>
+      <h3>A conversa antes do código</h3>
+      <p><code>/utf-issue 27</code> faz o agente ler a Issue e o PRD e <strong>fazer
+      perguntas</strong> sobre casos de borda e caminhos tristes. É o momento de descobrir o
+      que ninguém tinha pensado — e é barato aqui, caro depois.</p>
+    </li>
+    <li>
+      <span class="quem eh-ia">IA escreve</span>
+      <h3>A branch e a especificação</h3>
+      <p>A branch nasce agora, a partir da <code>develop</code>, <strong>antes</strong> da
+      aprovação: no Gitflow <code>main</code> e <code>develop</code> são bloqueadas, e o
+      commit de aprovação precisa de um lugar para viver. Nela o agente salva
+      <code>specs/27-reserva-de-carona/spec.md</code> com <code>status: rascunho</code> — e
+      <strong>para</strong>.</p>
+    </li>
+  </ol>
+
+  <div class="portao sangra">
+    <div class="portao-interno">
+      <svg class="marca" viewBox="0 0 32 24" aria-hidden="true"><path d="M6 3v18M26 3v18M6 9h20M6 15h20"/></svg>
+      <b><i>1</i>Você aprova a spec</b>
+      <span>Leia o arquivo inteiro, fora do chat. Discorde de alguma coisa — sempre tem o que ajustar. Aprovar é trocar <code>status: rascunho</code> por <code>status: aprovada</code> e commitar essa linha na branch, com o seu nome no <code>git log</code>. Em dúvida sobre uma decisão técnica, rode <code>/utf-tutor spec</code> antes.</span>
+    </div>
+  </div>
+
+  <ol class="fluxo" style="counter-reset: etapa 2">
+    <li>
+      <span class="quem eh-ia">IA escreve, você aprova na conversa</span>
+      <h3>O plano</h3>
+      <p>O agente quebra a spec em tarefas de dois a cinco minutos cada. Se o plano passar de
+      dez tarefas, a história é grande demais e ele propõe dividir. Spec e plano são os
+      <strong>primeiros commits</strong> da branch, antes de qualquer código — é isso que
+      prova que a especificação veio antes.</p>
+    </li>
+    <li>
+      <span class="quem">você conduz, uma por vez</span>
+      <h3>A execução, tarefa a tarefa</h3>
+      <p><code>/utf-task 1</code>, <code>/utf-task 2</code>, e assim por diante. Cada tarefa
+      roda o ciclo completo descrito <a href="#tarefa">na próxima seção</a> e devolve o
+      controle a você no fim. O ciclo nunca emenda duas tarefas.</p>
+    </li>
+    <li>
+      <span class="quem eh-ia">auditor de contexto limpo</span>
+      <h3>A auditoria do diff inteiro</h3>
+      <p>Com todas as tarefas prontas, um último agente somente-leitura compara o diff
+      completo da branch contra a spec aprovada, ignorando o plano. Ele existe para pegar o
+      que passa entre as tarefas: um critério de aceite que ninguém cobriu, documentação que
+      ficou para trás.</p>
+    </li>
+  </ol>
+
+  <div class="portao sangra">
+    <div class="portao-interno">
+      <svg class="marca" viewBox="0 0 32 24" aria-hidden="true"><path d="M6 3v18M26 3v18M6 9h20M6 15h20"/></svg>
+      <b><i>PR</i>Você escreve e abre o Pull Request</b>
+      <span>Antes, rode <code>/utf-tutor prova</code>: o simulado da defesa, uma pergunta por vez sobre o diff. Depois, escreva com as suas palavras a seção “O que este PR faz e por quê” e liste os apontamentos que você aceitou e os que recusou. O PR vai para a <code>develop</code>. Nunca cole o diff nem a saída da IA nesse texto.</span>
+    </div>
+  </div>
+
+  <ol class="fluxo" style="counter-reset: etapa 5">
+    <li>
+      <span class="quem eh-ia">verificação automática</span>
+      <h3>O Portão de Entendimento</h3>
+      <p>Uma checagem no GitHub Actions confere se a seção “O que este PR faz e por quê” tem
+      pelo menos 250 caracteres — um parágrafo de verdade. Vale para todos os PRs, inclusive
+      os de manutenção. Não é burocracia: é o sintoma aparecendo cedo. Se você travou para
+      escrever, volte e leia o código antes de insistir no texto.</p>
+    </li>
+    <li>
+      <span class="quem">você</span>
+      <h3>Merge na develop</h3>
+      <p>A <code>develop</code> integra o trabalho da equipe; a <code>main</code> recebe só
+      o que vai para produção, num merge à parte. As duas são protegidas: nada entra sem
+      Pull Request.</p>
+    </li>
+  </ol>
+
+  <h2 id="tarefa">Dentro de uma tarefa</h2>
+
+  <p>Um <code>/utf-task</code> parece um comando só, mas dentro dele acontece o ciclo inteiro
+  — com duas paradas suas.</p>
+
+  <ol class="fluxo">
+    <li>
+      <span class="quem eh-ia">tutor, contexto limpo</span>
+      <h3>O tutor explica antes</h3>
+      <p>Bem mastigado: o que a tarefa vai construir, qual critério de aceite ela serve, quais
+      conceitos vão aparecer com o nome oficial de cada um, os arquivos que vão ser tocados na
+      ordem em que serão escritos, e um roteiro do que procurar no diff depois. O código nunca
+      chega como surpresa.</p>
+    </li>
+  </ol>
+
+  <div class="portao sangra">
+    <div class="portao-interno">
+      <svg class="marca" viewBox="0 0 32 24" aria-hidden="true"><path d="M6 3v18M26 3v18M6 9h20M6 15h20"/></svg>
+      <b><i>2</i>Você aceita a explicação</b>
+      <span>Tire dúvidas primeiro. O implementador só roda depois do seu “pode implementar”.</span>
+    </div>
+  </div>
+
+  <ol class="fluxo" style="counter-reset: etapa 1">
+    <li>
+      <span class="quem eh-ia">implementador novo</span>
+      <h3>A implementação, com TDD</h3>
+      <p>Um agente que começa com o contexto limpo, faz uma tarefa só e segue RED, GREEN,
+      REFACTOR — o <code>.spec.ts</code> antes da lógica.</p>
+    </li>
+    <li>
+      <span class="quem eh-ia">dois revisores, em paralelo</span>
+      <h3>A revisão</h3>
+      <p>Um revisor confere o diff contra os critérios de aceite da spec; o outro confere
+      contra o <code>architecture.md</code>. São agentes <strong>diferentes</strong> do que
+      implementou, e nenhum dos dois tem permissão de escrita. Os pareceres são gravados sem
+      edição em <code>specs/27-reserva-de-carona/reviews/</code> — é esse arquivo que prova,
+      na apresentação, que a revisão aconteceu.</p>
+    </li>
+  </ol>
+
+  <div class="portao sangra">
+    <div class="portao-interno">
+      <svg class="marca" viewBox="0 0 32 24" aria-hidden="true"><path d="M6 3v18M26 3v18M6 9h20M6 15h20"/></svg>
+      <b><i>3</i>Você tria os apontamentos</b>
+      <span>Um por um: aceita ou recusa. Recusar exige justificativa, e a decisão fica registrada em <code>reviews/tarefa-01-decisoes-r1.md</code>. Recusa fundamentada vale mais do que aceitar tudo — aceitar tudo revela que você não leu.</span>
+    </div>
+  </div>
+
+  <ol class="fluxo" style="counter-reset: etapa 3">
+    <li>
+      <span class="quem eh-ia">implementador novo de novo</span>
+      <h3>A correção</h3>
+      <p>Os apontamentos aceitos vão para um implementador novo, com os apontamentos
+      transcritos. Nunca para o mesmo agente que escreveu: ele herda o próprio ponto cego e
+      defende a abordagem que propôs.</p>
+    </li>
+  </ol>
+
+  <div class="portao sangra">
+    <div class="portao-interno">
+      <svg class="marca" viewBox="0 0 32 24" aria-hidden="true"><path d="M6 3v18M26 3v18M6 9h20M6 15h20"/></svg>
+      <b><i>4</i>Você confere o diff e autoriza o commit</b>
+      <span>Na sua IDE, seguindo o roteiro que o tutor deu antes. Se o diff passou rápido demais, <code>/utf-tutor passo 1</code> destrincha arquivo por arquivo, no seu ritmo — é ali que se aprende sintaxe, com cinco linhas na frente e não com quarenta arquivos na véspera.</span>
+    </div>
+  </div>
+
+  <h2>O limite de duas rodadas</h2>
+
+  <p>O ciclo de correção tem um limite estrito: <strong>duas rodadas</strong>. A contagem não
+  é a memória do agente, que se perde — é a listagem da pasta:</p>
+
+  <p><code>ls specs/27-reserva-de-carona/reviews/tarefa-03-*</code></p>
+
+  <p>Nenhum arquivo significa rodada 1. Um par terminado em <code>-r1</code> significa que
+  você está na rodada 2. Um par <code>-r2</code> significa que acabou.</p>
+
+  <div class="pare">
+    <p><strong>Estourou as duas rodadas? Não tente de novo.</strong> Quando o ciclo trava,
+    o problema quase nunca está no código — está na spec ambígua, na tarefa grande demais ou
+    numa dependência que ninguém declarou. Insistir na mesma conversa é a pior coisa a fazer:
+    a janela de contexto está contaminada e o agente passa a defender a abordagem errada.</p>
+    <p>Leia os dois pareceres da rodada 2 lado a lado. Se eles discordam entre si, ou apontam
+    o mesmo trecho por motivos diferentes, o problema está na spec. Corrija a spec e comece
+    uma <strong>sessão nova</strong>, entregando só a spec e o plano.</p>
+  </div>
+
+  <div class="adiante">
+    <h2>Próximo</h2>
+    <p><a href="comandos.html">Os comandos, um por fase</a></p>
+    <p><a href="papeis.html">Quem escreve, quem revisa e por quê</a></p>
+  </div>
+
+</main>
+
+<footer class="rodape">
+  <div class="rodape-interno">
+    <p>UTF-SDD — método da disciplina de Angular, UTFPR.</p>
+    <p>O ciclo inteiro, com os desvios, está no <a href="https://github.com/utfpr-gp/utf-angular-template/blob/main/docs/guia-sdd.md">guia da disciplina</a>; o passo a passo operacional, no <a href="https://github.com/utfpr-gp/utf-angular-template/blob/main/docs/tutorial-sdd.md">tutorial</a>.</p>
+    <p><a href="https://github.com/utfpr-gp/utf-angular-template">github.com/utfpr-gp/utf-angular-template</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+name: Portão de Entendimento
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  explicacao:
+    runs-on: ubuntu-latest
+    steps:
+      - name: A seção "O que este PR faz e por quê" está preenchida?
+        env:
+          CORPO: ${{ github.event.pull_request.body }}
+        run: |
+          TEXTO=$(printf '%s' "$CORPO" \
+            | sed -n '/O que este PR faz e por quê/,$p' \
+            | tail -n +2 \
+            | sed '/^##/,$d' \
+            | perl -0pe 's/<!--.*?-->//gs')
+          TAMANHO=$(printf '%s' "$TEXTO" | tr -d '[:space:]' | wc -c)
+          echo "Caracteres na explicação: $TAMANHO (mínimo 250)"
+          if [ "$TAMANHO" -lt 250 ]; then
+            echo "::error::Escreva a seção 'O que este PR faz e por quê' com pelo menos 250 caracteres. Encontrei $TAMANHO."
+            exit 1
+          fi

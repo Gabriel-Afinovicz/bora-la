@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UTF-SDD — a IA escreve o código, você decide nos portões</title>
+<meta name="description" content="O método da disciplina de Angular da UTFPR: desenvolvimento dirigido por especificação, com portões de decisão humana registrada.">
+<link rel="icon" href="assets/portao.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;700&amp;family=JetBrains+Mono:wght@400;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&amp;display=swap">
+<link rel="stylesheet" href="assets/estilo.css">
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-interno">
+    <a class="selo" href="index.html">
+      <svg class="marca" viewBox="0 0 32 24" aria-hidden="true"><path d="M6 3v18M26 3v18M6 9h20M6 15h20"/></svg>
+      UTF-SDD
+    </a>
+    <nav aria-label="Seções do site">
+      <a href="index.html" aria-current="page">Início</a>
+      <a href="ciclo.html">O ciclo</a>
+      <a href="comandos.html">Comandos</a>
+      <a href="papeis.html">Papéis</a>
+      <a href="duvidas.html">Dúvidas</a>
+    </nav>
+  </div>
+</header>
+
+<main class="pagina">
+
+  <h1>A IA escreve o código. Você decide nos portões.</h1>
+
+  <p class="abertura">O UTF-SDD é o método da disciplina de Angular da UTFPR.
+  Ele existe para que, no fim do semestre, você consiga explicar cada linha que entrou
+  no seu projeto — inclusive as que não foi você que digitou.</p>
+
+  <div class="registro">
+    <table>
+      <caption hidden>Histórico de uma branch conduzida pelo método</caption>
+      <thead>
+        <tr><th scope="col">commit</th><th scope="col">o que entrou</th><th scope="col">escreveu</th><th scope="col">autorizou</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="hash">9c1e04a</td><td>spec e plano da issue 27</td><td class="assina">você</td><td class="assina">você</td></tr>
+        <tr><td class="hash">4b7ad12</td><td>spec: rascunho para aprovada</td><td class="assina">você</td><td class="assina">você</td></tr>
+        <tr><td class="hash">e30f8a6</td><td>tarefa 1: service de caronas</td><td>IA</td><td class="assina">você</td></tr>
+        <tr><td class="hash">7fd2b90</td><td>tarefa 2: esconde carona lotada</td><td>IA</td><td class="assina">você</td></tr>
+        <tr><td class="hash">1a5c8e3</td><td>tarefa 3: aviso ao reservar</td><td>IA</td><td class="assina">você</td></tr>
+        <tr><td class="hash">c02d7f5</td><td>docs: prd e arquitetura no mesmo commit</td><td>IA</td><td class="assina">você</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>O problema que o método resolve</h2>
+
+  <p>Pedir código para uma inteligência artificial é fácil. Qualquer pessoa gera uma tela
+  funcionando em cinco minutos. O problema aparece semanas depois: o sistema faz coisas que
+  ninguém pediu, ninguém lembra por que uma regra existe e, quando é preciso mudar algo, a
+  vontade é apagar tudo e recomeçar.</p>
+
+  <p>Nesta disciplina você não é avaliado por gerar código rápido. Você é avaliado por
+  dirigir a IA, auditar o que ela gerou e explicar as decisões técnicas. Você é o engenheiro
+  e o arquiteto; a IA é a sua equipe de execução.</p>
+
+  <p class="regra">Se o Pull Request for a primeira vez que você olha o código, o método falhou.
+  <cite>A regra de ouro, do guia da disciplina</cite></p>
+
+  <h2>O que é um portão</h2>
+
+  <p>O UTF-SDD é um <strong>SDD por portões</strong> (<i>Gated Spec-Driven Development</i>).
+  Portão é um ponto onde o trabalho para e espera por uma decisão sua — decisão que fica
+  registrada em algum lugar que outra pessoa consegue conferir depois. Neste site, um portão
+  aparece assim:</p>
+
+  <div class="portao sangra">
+    <div class="portao-interno">
+      <svg class="marca" viewBox="0 0 32 24" aria-hidden="true"><path d="M6 3v18M26 3v18M6 9h20M6 15h20"/></svg>
+      <b>Você aprova a spec</b>
+      <span>Troque <code>status: rascunho</code> por <code>status: aprovada</code> e commite essa linha na branch da história. O commit fica no <code>git log</code>, com o seu nome. Nenhum agente mexe nesse campo.</span>
+    </div>
+  </div>
+
+  <p>São quatro portões por história, mais o Pull Request no fim. Nenhum deles é burocracia:
+  cada um existe porque, sem ele, alguma coisa que você deveria ter decidido seria decidida
+  pela IA no seu lugar, sem você perceber.</p>
+
+  <h2>Três compromissos</h2>
+
+  <p>Spec-Driven Development não é invenção desta disciplina. O que distingue a variante
+  daqui são três compromissos que o método não abre mão.</p>
+
+  <div class="compromisso">
+    <h3>Nada avança sem uma decisão sua, registrada</h3>
+    <p>Aprovar a spec, aceitar a explicação do tutor, triar cada apontamento da revisão,
+    autorizar cada commit. A decisão vira arquivo ou vira commit — memória de conversa não
+    conta, porque não sobrevive à sessão e não prova nada na defesa.</p>
+  </div>
+
+  <div class="compromisso">
+    <h3>Quem revisa nunca é quem escreveu</h3>
+    <p>O implementador começa com o contexto limpo. Dois revisores diferentes olham o
+    resultado, e nenhum dos dois tem permissão de escrita — eles apontam, não corrigem. Um
+    agente que corrige o próprio trabalho herda o próprio ponto cego e some com a evidência
+    do erro.</p>
+  </div>
+
+  <div class="compromisso">
+    <h3>Todo artefato é evidência para a defesa</h3>
+    <p>Specs, planos, pareceres, decisões de triagem e mensagens de commit não existem para
+    encher pasta. Eles existem para provar, no dia da apresentação, que você entendeu o que
+    assinou.</p>
+  </div>
+
+  <h2>Quem produz o quê</h2>
+
+  <p>O método gira em torno de onze artefatos. Desses onze, a IA produz sozinha apenas três:
+  o código, o plano de tarefas e os pareceres de revisão. A ficha da disciplina já vem pronta
+  no template. Todo o resto precisa da sua direção.</p>
+
+  <div class="rolagem">
+  <table>
+    <thead>
+      <tr><th scope="col">Artefato</th><th scope="col">Onde fica</th><th scope="col">Quem dirige</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>README.md</code></td><td>raiz</td><td class="voce">você</td></tr>
+      <tr><td><code>docs/prd.md</code></td><td>o que o produto faz</td><td class="voce">você</td></tr>
+      <tr><td><code>docs/design-tokens.md</code></td><td>tokens, PWA e o link do protótipo</td><td class="voce">você</td></tr>
+      <tr><td><code>docs/architecture.md</code></td><td>onde as coisas moram</td><td class="voce">você</td></tr>
+      <tr><td><code>docs/checklist.md</code></td><td>a ficha da disciplina</td><td class="ia">vem no template</td></tr>
+      <tr><td>Issue</td><td>GitHub Projects</td><td class="voce">você</td></tr>
+      <tr><td><code>spec.md</code></td><td>o que precisa existir</td><td class="voce">você aprova</td></tr>
+      <tr><td><code>plan.md</code></td><td>como será construído</td><td class="ia">IA</td></tr>
+      <tr><td>Pareceres</td><td><code>reviews/</code></td><td class="ia">IA</td></tr>
+      <tr><td>Código</td><td><code>apps/web/</code></td><td class="ia">IA</td></tr>
+      <tr><td>Pull Request</td><td>GitHub</td><td class="voce">você</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2>Comece por aqui</h2>
+
+  <p>Se você acabou de criar o seu repositório pelo <i>Use this template</i>, siga nesta
+  ordem:</p>
+
+  <ol>
+    <li><a href="ciclo.html">Entenda o ciclo</a> — a Fase 0, o ciclo de uma história e os quatro portões.</li>
+    <li><a href="comandos.html">Veja os comandos</a> — o que digitar em cada etapa e o que sai de cada um.</li>
+    <li><a href="papeis.html">Conheça os papéis</a> — quem escreve, quem revisa e por que a trava de escrita importa.</li>
+    <li>Leia <a href="https://github.com/utfpr-gp/utf-angular-template/blob/main/docs/checklist.md"><code>docs/checklist.md</code></a> no seu repositório — é a ficha da disciplina, com as regras, os Indicadores de Desempenho e as entregas.</li>
+  </ol>
+
+  <p class="nota">Este site ensina o método. A regra escrita, valendo como fonte da verdade,
+  está no <a href="https://github.com/utfpr-gp/utf-angular-template/blob/main/docs/guia-sdd.md">guia da disciplina</a> e no
+  <a href="https://github.com/utfpr-gp/utf-angular-template/blob/main/docs/tutorial-sdd.md">tutorial</a>, dentro do repositório. Quando os dois
+  divergirem, vale o que está no repositório.</p>
+
+  <div class="adiante">
+    <h2>Próximo</h2>
+    <p><a href="ciclo.html">O ciclo, do começo ao Pull Request</a></p>
+  </div>
+
+</main>
+
+<footer class="rodape">
+  <div class="rodape-interno">
+    <p>UTF-SDD — método da disciplina de Angular, UTFPR.</p>
+    <p>Referência completa no repositório: <a href="https://github.com/utfpr-gp/utf-angular-template/blob/main/docs/guia-sdd.md">guia</a>, <a href="https://github.com/utfpr-gp/utf-angular-template/blob/main/docs/tutorial-sdd.md">tutorial</a>, <a href="https://github.com/utfpr-gp/utf-angular-template/blob/main/docs/checklist.md">checklist</a>.</p>
+    <p><a href="https://github.com/utfpr-gp/utf-angular-template">github.com/utfpr-gp/utf-angular-template</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

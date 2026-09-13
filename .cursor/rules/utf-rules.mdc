@@ -1,0 +1,9 @@
+---
+description: Constituição da disciplina — as regras inegociáveis do método UTF-SDD.
+alwaysApply: true
+---
+
+Leia `.agents/rules/utf-rules.md` e obedeça-o integralmente. Ele é a constituição
+deste repositório; este arquivo é só a casca do Cursor.
+
+@.agents/rules/utf-rules.md

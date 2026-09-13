@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Os papéis — UTF-SDD</title>
+<meta name="description" content="Implementador, revisores, auditor e tutor: quem escreve, quem só lê, e por que a trava de escrita sustenta o método inteiro.">
+<link rel="icon" href="assets/portao.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;700&amp;family=JetBrains+Mono:wght@400;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&amp;display=swap">
+<link rel="stylesheet" href="assets/estilo.css">
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-interno">
+    <a class="selo" href="index.html">
+      <svg class="marca" viewBox="0 0 32 24" aria-hidden="true"><path d="M6 3v18M26 3v18M6 9h20M6 15h20"/></svg>
+      UTF-SDD
+    </a>
+    <nav aria-label="Seções do site">
+      <a href="index.html">Início</a>
+      <a href="ciclo.html">O ciclo</a>
+      <a href="comandos.html">Comandos</a>
+      <a href="papeis.html" aria-current="page">Papéis</a>
+      <a href="duvidas.html">Dúvidas</a>
+    </nav>
+  </div>
+</header>
+
+<main class="pagina">
+
+  <h1>Quem escreve, quem revisa</h1>
+
+  <p class="abertura">A IA não é um agente só. São cinco, com permissões diferentes de
+  propósito — e é a diferença de permissão, não a boa vontade do modelo, que faz a revisão
+  valer alguma coisa.</p>
+
+  <h2>Os cinco papéis</h2>
+
+  <div class="rolagem largo">
+  <table>
+    <thead>
+      <tr><th scope="col">Agente</th><th scope="col">Escreve?</th><th scope="col">O que ele faz</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>implementador</strong></td>
+        <td class="sim">sim</td>
+        <td>Faz uma tarefa do plano, com TDD, começando com o contexto limpo. É o único que
+        toca em arquivo de código.</td>
+      </tr>
+      <tr>
+        <td><strong>revisor-conformidade</strong></td>
+        <td class="nao">não</td>
+        <td>Compara o diff da tarefa contra os critérios de aceite da spec. Roda os testes
+        para saber se o critério é atendido de verdade.</td>
+      </tr>
+      <tr>
+        <td><strong>revisor-codigo</strong></td>
+        <td class="nao">não</td>
+        <td>Lê o mesmo diff contra o <code>architecture.md</code>: componentes, services,
+        rotas, estado e os nomes do glossário.</td>
+      </tr>
+      <tr>
+        <td><strong>auditor-final</strong></td>
+        <td class="nao">não</td>
+        <td>No fim da história, compara o diff inteiro da branch contra a spec aprovada,
+        ignorando o plano.</td>
+      </tr>
+      <tr>
+        <td><strong>tutor</strong></td>
+        <td class="nao">não</td>
+        <td>Explica. Os documentos da Fase 0, o scaffold, o que a tarefa vai construir e o que
+        o diff fez. Não corrige e não opina sobre qualidade.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>Quem chama o revisor é o fluxo, não o implementador. Nenhum agente decide que o próprio
+  trabalho dispensa revisão.</p>
+
+  <h2>A trava</h2>
+
+  <p class="regra">O revisor não pode ter permissão de escrita. Não porque ele foi instruído a
+  não escrever, mas porque a ferramenta não deixa.</p>
+
+  <p>Pedir “por favor, não corrija, apenas aponte” no prompt é uma sugestão. O modelo vai
+  obedecer na maioria das vezes e, na vez em que não obedecer, <strong>você não vai
+  saber</strong>: o apontamento que ele consertou sozinho nunca chega até você, e é justamente
+  esse que você precisava ver.</p>
+
+  <p>Por isso o revisor é somente leitura, e o parecer dele é gravado sem edição em
+  <code>specs/&lt;issue&gt;-&lt;slug&gt;/reviews/</code>. É esse arquivo que prova, na
+  apresentação, que a revisão aconteceu — e é a listagem dele que conta as rodadas.</p>
+
+  <div class="pare">
+    <p><strong>Cuidado com o terminal.</strong> Um agente somente leitura que tem acesso ao
+    shell consegue escrever com <code>sed -i</code>, com <code>&gt;</code> ou com
+    <code>git checkout</code>, e a trava vira ficção. Só que os revisores precisam do terminal
+    para rodar <code>git diff</code> e a suíte de testes. Há duas saídas, nesta ordem de
+    preferência:</p>
+    <p>1. Se a sua ferramenta permite <strong>lista de comandos liberados</strong>, libere só
+    <code>git diff</code> e o comando de teste. É a trava de verdade.</p>
+    <p>2. Se ela só liga ou desliga o terminal inteiro, escreva a proibição no prompt do
+    agente: o terminal existe para <code>git diff</code> e para rodar os testes, e é proibido
+    usá-lo para alterar qualquer arquivo.</p>
+  </div>
+
+  <h2>As três coisas que a ferramenta precisa saber fazer</h2>
+
+  <p>O método é mais importante que a ferramenta. Ferramenta de IA envelhece rápido; o que
+  você leva da disciplina é o método. Se a sua ferramenta faz estas três coisas, o ciclo
+  roda.</p>
+
+  <div class="compromisso">
+    <h3>Regras sempre ativas</h3>
+    <p>Um arquivo carregado em toda mensagem, com as regras inegociáveis do projeto: não
+    codificar antes da spec aprovada, TDD obrigatório, <code>main</code> e <code>develop</code>
+    bloqueadas, os nomes vêm do glossário. Sem isso você repete as mesmas instruções todo dia
+    e o agente esquece na terceira mensagem.</p>
+  </div>
+
+  <div class="compromisso">
+    <h3>Um comando de fluxo</h3>
+    <p>Um arquivo de instruções que você dispara com uma linha e que executa o passo inteiro:
+    despacha o tutor, o implementador e os dois revisores, grava os pareceres, conta a rodada,
+    decide. Você digita <code>/utf-task 3</code>; a orquestração inteira é o arquivo.</p>
+  </div>
+
+  <div class="compromisso">
+    <h3>Subagentes com ferramentas restritas</h3>
+    <p>É aqui que mora a parte que não pode faltar. Quase toda ferramenta moderna deixa você
+    declarar quais ferramentas cada subagente recebe. É essa declaração que carrega a trava, e
+    é a única coisa que não dá para compartilhar entre ferramentas.</p>
+  </div>
+
+  <h2>Um método, quatro ferramentas</h2>
+
+  <p>O template já vem configurado para quatro ferramentas. O conteúdo de verdade vive uma vez
+  só, em <code>.agents/</code>; cada ferramenta tem apenas uma casca de poucas linhas que
+  aponta para lá, com a sintaxe de permissão dela. Trocar de ferramenta no meio do semestre
+  não reescreve nada.</p>
+
+  <div class="rolagem largo">
+  <table>
+    <thead>
+      <tr><th scope="col">Ferramenta</th><th scope="col">Regras</th><th scope="col">Comandos</th><th scope="col">Subagentes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Claude Code</td><td><code>CLAUDE.md</code></td><td><code>.claude/commands/</code></td><td><code>.claude/agents/</code></td></tr>
+      <tr><td>Cursor</td><td><code>.cursor/rules/</code></td><td><code>.cursor/commands/</code></td><td><code>.cursor/agents/</code></td></tr>
+      <tr><td>Antigravity</td><td><code>.agents/rules/</code></td><td><code>.agents/workflows/</code></td><td><code>.agents/agents/</code></td></tr>
+      <tr><td>OpenCode</td><td><code>AGENTS.md</code></td><td><code>.opencode/command/</code></td><td><code>.opencode/agents/</code></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>Nas quatro, os revisores e o tutor nascem sem poder de escrita. A força da trava é que
+  muda:</p>
+
+  <ul>
+    <li><strong>Claude Code, Cursor e Antigravity</strong> negam a ferramenta de edição, mas
+    precisam liberar o terminal para o revisor rodar <code>git diff</code>. Quem fecha a
+    brecha ali é a proibição escrita no prompt do agente.</li>
+    <li><strong>OpenCode fecha por configuração.</strong> É o único que libera comandos
+    específicos em vez de ligar ou desligar o terminal inteiro. E funciona com modelos
+    gratuitos, o que faz dele o caminho de custo zero mais completo da disciplina.</li>
+  </ul>
+
+  <div class="nota">
+    <p><strong>Se você usa OpenCode</strong>, ajuste a lista de comandos de teste em
+    <code>.opencode/agents/</code> à stack do seu <code>architecture.md</code>. Comando que não
+    estiver liberado não roda, e o parecer sai incompleto sem avisar.</p>
+    <p>E se o seu OpenCode não listar os agentes ou os comandos, é diferença de versão nos
+    nomes das pastas: renomeie <code>.opencode/agents/</code> para
+    <code>.opencode/agent/</code> e <code>.opencode/command/</code> para
+    <code>.opencode/commands/</code>. O conteúdo é o mesmo.</p>
+  </div>
+
+  <h2>Sem worktree, sem ambiente isolado</h2>
+
+  <p>Você trabalha na branch da Issue, na sua IDE, com os arquivos à vista. Worktrees e
+  sandboxes existem para vários agentes <em>que escrevem</em> rodarem em paralelo sem pisar
+  uns nos outros. Aqui há um escritor por vez e dois revisores que não escrevem: não existe
+  colisão possível. E ver o arquivo aparecer no explorador, o teste ficar vermelho e depois
+  verde, é parte do que você está aqui para aprender.</p>
+
+  <div class="adiante">
+    <h2>Próximo</h2>
+    <p><a href="duvidas.html">Erros comuns, o checklist de bolso e as dúvidas frequentes</a></p>
+  </div>
+
+</main>
+
+<footer class="rodape">
+  <div class="rodape-interno">
+    <p>UTF-SDD — método da disciplina de Angular, UTFPR.</p>
+    <p>Os prompts completos de cada agente estão em <a href="https://github.com/utfpr-gp/utf-angular-template/tree/main/.agents/agents"><code>.agents/agents/</code></a>; a discussão sobre a trava, no <a href="https://github.com/utfpr-gp/utf-angular-template/blob/main/docs/guia-sdd.md">guia da disciplina</a>.</p>
+    <p><a href="https://github.com/utfpr-gp/utf-angular-template">github.com/utfpr-gp/utf-angular-template</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
