@@ -55,7 +55,7 @@ beneficiando também quem tem dificuldade para custear o transporte diário.
 | Ator ou condição | Quem é | Pode | Não pode |
 | :--------------- | :----- | :--- | :------- |
 | **Visitante** | Pessoa sem uma sessão iniciada. | Consultar as viagens disponíveis. | Solicitar vaga, trocar mensagens ou oferecer viagens. |
-| **Passageiro** | Papel inicial de toda pessoa cadastrada. | Consultar viagens, solicitar caronas, cancelar solicitações e reservas e trocar mensagens sobre suas solicitações. | Confirmar o próprio pedido ou administrar viagens de outras pessoas. |
+| **Passageiro** | Papel inicial de toda pessoa cadastrada. | Consultar viagens, solicitar caronas, confirmar sua participação após a aprovação do motorista, cancelar solicitações e reservas e trocar mensagens. | Aprovar seu pedido no lugar do motorista ou administrar viagens de outras pessoas. |
 | **Motorista** | Pessoa que cadastrou ao menos um veículo; continua podendo atuar como passageiro. | Publicar e administrar suas viagens, definir vagas e repetições, aceitar ou recusar pedidos, trocar mensagens e concluir viagens. | Aceitar pessoas além das vagas disponíveis ou alterar livremente uma viagem com passageiros aceitos. |
 | **Pessoa com e-mail pendente** | Pessoa cadastrada que ainda não confirmou o endereço de e-mail. | Entrar na conta, consultar viagens e solicitar novo link de confirmação. | Solicitar ou oferecer caronas. |
 | **Pessoa bloqueada** | Pessoa temporariamente suspensa por cancelamentos tardios repetidos. | Entrar na conta e consultar viagens. | Solicitar caronas ou oferecer viagens durante o bloqueio. |
@@ -166,6 +166,8 @@ manualmente.
 - [ ] **CA4 — Dado** que a programação foi publicada, **quando** uma pessoa consultar as viagens, **então** encontrará as ocorrências nas respectivas datas e horários.
 - [ ] **CA5 — Dado** que um passageiro foi aceito em uma ocorrência, **quando** a reserva for confirmada, **então** a vaga será ocupada somente naquela viagem.
 - [ ] **CA6 — Dado** que faltam dias, horários ou informações obrigatórias, **quando** eu tentar publicar a programação, **então** o sistema indicará o que corrigir e impedirá a publicação.
+- [ ] **CA7 — Dado** uma programação válida, **quando** ocorrer uma falha que impeça sua publicação completa, **então** nenhuma de suas viagens será publicada, o sistema informará o problema e manterá os dados preenchidos para uma nova tentativa.
+- [ ] **CA8 — Dado** que estou repetindo uma tentativa de publicação da mesma programação após uma falha, **quando** a publicação for concluída, **então** todas as ocorrências serão disponibilizadas uma única vez, sem duplicar viagens.
 
 **Regras relacionadas:** RN06, RN07, RN11.
 
@@ -198,7 +200,7 @@ motorista **para que** eu possa confirmar minha participação na viagem.
 - [ ] **CA1 — Dado** que tenho e-mail confirmado e não estou bloqueado, **quando** eu solicitar uma carona disponível, **então** o motorista receberá meu pedido, que ficará pendente sem ocupar vaga.
 - [ ] **CA2 — Dado** que ainda não tenho reserva confirmada naquele horário, **quando** eu solicitar outras viagens, **então** poderei manter vários pedidos pendentes.
 - [ ] **CA3 — Dado** que faltam mais de 15 minutos para a saída, **quando** o motorista aceitar meu pedido, **então** a reserva será confirmada e ocupará uma vaga.
-- [ ] **CA4 — Dado** que faltam 15 minutos ou menos, **quando** o motorista aceitar, **então** receberei um pedido de confirmação e a vaga somente será ocupada se eu aceitar e ainda houver disponibilidade.
+- [ ] **CA4 — Dado** que faltam 15 minutos ou menos, **quando** o motorista aceitar, **então** receberei um pedido de confirmação e a vaga somente será ocupada se eu aceitar e ainda houver disponibilidade; essa confirmação também valerá como confirmação final de presença, sem solicitar outra.
 - [ ] **CA5 — Dado** que uma reserva foi confirmada, **quando** a confirmação ocorrer, **então** meus outros pedidos pendentes para o mesmo horário serão cancelados automaticamente, sem punição.
 - [ ] **CA6 — Dado** que o motorista recusa meu pedido ou eu recuso uma confirmação tardia, **quando** a decisão ocorrer, **então** a solicitação será encerrada e a outra pessoa será informada, sem punição.
 - [ ] **CA7 — Dado** que a viagem ficou lotada ou foi cancelada, **quando** alguém tentar confirmar uma vaga, **então** o sistema impedirá a confirmação e informará o motivo.
@@ -297,7 +299,7 @@ conclusão da viagem **para que** o histórico de viagens realizadas permaneça 
 
 **Critérios de aceite:**
 
-- [ ] **CA1 — Dado** um passageiro com reserva confirmada, **quando** faltarem 15 minutos para a saída, **então** o sistema solicitará sua confirmação final de presença.
+- [ ] **CA1 — Dado** um passageiro com reserva confirmada e sem confirmação final de presença, **quando** faltarem 15 minutos para a saída, **então** o sistema solicitará sua confirmação final de presença.
 - [ ] **CA2 — Dado** que o passageiro confirma até o horário de saída, **quando** a confirmação ocorrer, **então** sua reserva permanecerá ativa.
 - [ ] **CA3 — Dado** que o passageiro não responde até o horário de saída, **quando** esse horário chegar, **então** sua reserva será cancelada automaticamente, sem punição e sem crédito pela viagem.
 - [ ] **CA4 — Dado** que a viagem foi realizada, **quando** o motorista encerrá-la, **então** deverá indicar quais passageiros realmente participaram.
@@ -306,8 +308,11 @@ conclusão da viagem **para que** o histórico de viagens realizadas permaneça 
 - [ ] **CA7 — Dado** que um passageiro não participou, **quando** o motorista concluir a viagem, **então** ela não contará para esse passageiro.
 - [ ] **CA8 — Dado** que a viagem foi cancelada pelo motorista, **quando** isso ocorrer, **então** ninguém receberá crédito de viagem concluída.
 - [ ] **CA9 — Dado** que o motorista ainda não concluiu a viagem, **quando** alguém consultar o histórico, **então** ela permanecerá aguardando conclusão e não contará para a recuperação.
+- [ ] **CA10 — Dado** que o motorista aceitou o pedido faltando 15 minutos ou menos e o passageiro confirmou a reserva antes da saída, **quando** o sistema verificar sua presença, **então** essa confirmação já valerá como confirmação final de presença, sem exigir outra resposta.
+- [ ] **CA11 — Dado** que a viagem ainda não foi concluída no sistema, **quando** uma falha impedir que o motorista salve a conclusão, **então** o sistema informará o problema, manterá a viagem aguardando conclusão e permitirá tentar novamente, sem contabilizar créditos para ninguém.
+- [ ] **CA12 — Dado** que a conclusão da viagem já foi salva, **quando** o motorista repetir a ação de concluir, **então** o sistema informará que a viagem já foi concluída e não contabilizará novamente créditos para nenhum participante.
 
-**Regras relacionadas:** RN20, RN21, RN22, RN23.
+**Regras relacionadas:** RN10, RN20, RN21, RN22, RN23.
 
 ---
 
@@ -324,8 +329,8 @@ conclusão da viagem **para que** o histórico de viagens realizadas permaneça 
 | **RN07** | O motorista define as vagas de cada viagem sem ultrapassar a capacidade do veículo selecionado. |
 | **RN08** | Solicitações pendentes não ocupam vagas; reservas confirmadas ocupam uma vaga cada. |
 | **RN09** | O passageiro pode manter vários pedidos para o mesmo horário; ao confirmar uma reserva, os demais são cancelados automaticamente, sem punição. |
-| **RN10** | Um aceite feito nos últimos 15 minutos depende de confirmação do passageiro e só ocupa vaga depois dessa confirmação. |
-| **RN11** | Programações recorrentes duram seis meses a partir da primeira viagem e podem ter horários por dia ou um horário aplicado aos dias selecionados. |
+| **RN10** | Um aceite feito faltando 15 minutos ou menos depende de confirmação do passageiro e só ocupa vaga depois dessa confirmação, se ainda houver disponibilidade. Essa mesma resposta vale como confirmação final de presença, sem exigir outra. |
+| **RN11** | Programações recorrentes duram seis meses a partir da primeira viagem e podem ter horários por dia ou um horário aplicado aos dias selecionados. A publicação disponibiliza todas as ocorrências ou nenhuma; em caso de falha, os dados preenchidos são preservados para uma nova tentativa, sem duplicar viagens. |
 | **RN12** | “Apenas hoje” altera ou cancela uma ocorrência; sem essa opção, a ação alcança as próximas ocorrências da programação. |
 | **RN13** | Viagens com passageiros aceitos não podem ser alteradas, exceto pela troca para um veículo que comporte todos eles. |
 | **RN14** | Motorista e passageiro devem informar um motivo com pelo menos três palavras para cancelar. |
@@ -335,9 +340,9 @@ conclusão da viagem **para que** o histórico de viagens realizadas permaneça 
 | **RN18** | O bloqueio vale para os papéis de motorista e passageiro, cancela viagens e reservas futuras e permite apenas consultar viagens. |
 | **RN19** | Cancelamentos automáticos não geram infração. |
 | **RN20** | Trinta viagens realizadas consecutivamente sem cancelamento nos últimos 30 minutos zeram as infrações e fazem o próximo bloqueio voltar ao patamar inicial. |
-| **RN21** | Um cancelamento nos últimos 30 minutos reinicia a sequência de recuperação; se ocorrer nos últimos 15 minutos, também gera infração. |
-| **RN22** | Quinze minutos antes da saída, todo passageiro confirmado deve confirmar novamente a presença; a falta de resposta até o horário cancela a reserva sem punição. |
-| **RN23** | O motorista registra a conclusão e os passageiros presentes. O motorista recebe crédito se realizou a viagem; somente passageiros presentes recebem crédito. |
+| **RN21** | O cancelamento de uma carona confirmada feito pela própria pessoa faltando menos de 30 minutos para a saída reinicia sua sequência de recuperação; se faltarem menos de 15 minutos, também gera infração. |
+| **RN22** | Quinze minutos antes da saída, passageiros com reserva confirmada e sem confirmação final de presença recebem um pedido para confirmar a presença; a falta de resposta até o horário cancela a reserva sem punição. Para pedidos aceitos nos últimos 15 minutos, a confirmação prevista na RN10 já cumpre essa exigência. |
+| **RN23** | O motorista registra a conclusão e os passageiros presentes. O motorista recebe crédito se realizou a viagem; somente passageiros presentes recebem crédito. Se uma falha impedir que a conclusão seja salva, a viagem permanece aguardando conclusão, sem contabilizar créditos, e o motorista pode tentar novamente. Repetir uma conclusão já salva informa que a viagem já foi concluída, sem contabilizar créditos novamente para ninguém. |
 | **RN24** | O chat nasce com a solicitação e encerra na recusa, no cancelamento, na conclusão pelo motorista ou automaticamente no horário da viagem. |
 | **RN25** | Cada pessoa mantém até dez chats encerrados; os mais antigos são removidos primeiro. Excluir um chat afeta somente quem o excluiu. |
 | **RN26** | Na busca, viagens cuja rota passa a até 100 metros do local informado aparecem primeiro; opções mais distantes continuam disponíveis. |
